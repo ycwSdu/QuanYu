@@ -1,5 +1,5 @@
 # 医学影像辅助检测系统
-https://github.com/user-attachments/assets/7fa1aab3-ee82-44ca-9121-72c5bd87408c
+https://github.com/user-attachments/assets/854e9c9a-c5a3-43a6-bd60-3b565858ee90
 #### 软件架构
 * Python3
 * PyTorch>=1.0
