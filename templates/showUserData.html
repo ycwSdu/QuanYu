@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <title>关于我们</title>
+        <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../dist/css/bootstrap-theme.min.css" rel="stylesheet">
+        <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+        <link href="theme.css" rel="stylesheet">
+        <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+        <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <style>
+            .allReport
+            {
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/index">泉毓科技™医学影像智能分析系统</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse" style="float: right;">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="/">主页</a></li>
+            <li><a href="/about">关于</a></li>
+            <li><a href="/login">返回管理页面</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container theme-showcase" role="main">
+
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
+        <h1>泉毓™医学影像后台管理系统</h1>
+      </div>
+        <nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+        <div id="showAllUsers" >
+            <table class="table table-striped">
+	<caption>以下为{{ id }}的所有就诊信息</caption>
+	<thead>
+		<tr>
+			<th>证件号</th>
+            <th>姓名</th>
+			<th>检测时间</th>
+            <th>检测项目</th>
+            <th>报告</th>
+		</tr>
+	</thead>
+	<tbody>
+    {% for each in ill %}
+        <tr>
+			<td>{{ id }}</td>
+            <td>{{ each.user.name }}</td>
+			<td>{{ each.user.time }}</td>
+			<td>二导联心电图</td>
+			<td><button class="btn btn-success" onclick="showReport('report{{each.user.time}}')">查看报告</button></td>
+		</tr>
+    {% endfor %}
+	</tbody>
+</table>
+        </div>
+    </div>
+        </nav>
+    {% for each in ill %}
+        <div class="allReport" id="report{{each.user.time}}" style="margin-left: 10%; margin-right: 10%">
+            <p class="title" style="font-size: 18px; font-weight:bold;" > AI诊断</p>
+            <p class="subtitle" style="font-size: 12px;" > 报告需医生确认</p>
+            <table class="table table-hover">
+                <tr><th>姓名</th><th>年龄</th><th>性别</th><th>身份证号</th><th>检查时间</th><th>操作</th></tr>
+                <tr><td>{{ each.user.name }}</td><td>{{ each.user.age }}</td><td>{{ each.user.sex }}</td><td>{{ each.user.id }}</td><td>{{ each.user.time }}</td>
+                <td><button class="btn btn-danger" onclick="closeReport('report{{each.user.time}}')">关闭报告</button></td></tr>
+            </table>
+            <table class="table table-hover">{{ each.data|safe}}</table>
+        </div>
+    {% endfor %}
+    </div>
+</body>
+    <script>
+        function closeReport(id) {
+            document.getElementById(id).style.display='none';
+        }
+        function showReport(id) {
+            const data = document.getElementsByClassName('allReport');
+            for (var i =0;i<data.length;i++)
+            {
+                data[i].style.display = 'none';
+            }
+            document.getElementById(id).style.display='block';
+        }
+        function showUser() {
+            document.getElementById('showAllUsers').style.display = 'block';
+            document.getElementById('addUser').style.display = 'none';
+        }
+        function addUser() {
+            document.getElementById('showAllUsers').style.display = 'none';
+            document.getElementById('addUser').style.display = 'block';
+        }
+    </script>
+</html>

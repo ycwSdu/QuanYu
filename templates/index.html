@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <title>泉毓™科技医学影像智能分析系统</title>
+        <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../dist/css/bootstrap-theme.min.css" rel="stylesheet">
+        <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+        <link href="theme.css" rel="stylesheet">
+        <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+    </head>
+    <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/index">泉毓科技™医学影像智能分析系统</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse" style="float: right;">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="/">主页</a></li>
+            <li><a href="/about">关于</a></li>
+            <li><a href="/about">我的</a></li>
+            <li><a href="/login">管理员</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container theme-showcase" role="main">
+
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
+        <h1>泉毓™医学影像检测辅助系统</h1>
+        <p>支持传统医学影像疾病检测，包括CT计算机断层扫描（结肠息肉、胸部）、心电图ECG信号处理分析、眼底病变图像识别，较高的筛出率可以极大减轻影像科室医生工作效率，提高病检效率</p>
+      </div>
+
+
+      <div class="page-header">
+        <h1>二导联心电数据分析</h1>
+      </div>
+  <form role="form" enctype="multipart/form-data" action="/xinDian/" method="post">
+    <div class="form-group">
+        <label for="inputfile">心电数据dat文件</label>
+        <input type="file" id="inputFile1" name="inputFile1">
+        <label for="inputfile">心电数据hea文件</label>
+        <input type="file" id="inputFile2" name="inputFile2">
+    </div>
+    <input type="text" class="form-control" id="name" name="beiZhu" placeholder="备注" style="margin-bottom: 5px">
+    <button type="submit" class="btn btn-success">提交</button>
+    <button type="reset" class="btn btn btn-danger">取消</button>
+      {% csrf_token %}
+</form>
+        <div class="page-header">
+        <h1>肺部CT影像分析</h1>
+      </div>
+  <form role="form" enctype="multipart/form-data" action="/xinDian/" method="post">
+    <div class="form-group">
+        <label for="inputfile">CT影像数据文件导入</label>
+        <input type="file" id="inputFile" name="inputFile">
+    </div>
+    <input type="text" class="form-control" id="name" name="beiZhu" placeholder="备注" style="margin-bottom: 5px">
+    <button type="submit" class="btn btn-success">提交</button>
+    <button type="reset" class="btn btn btn-danger">取消</button>
+      {% csrf_token %}
+</form>
+        <div class="page-header">
+        <h1>直肠息肉影像鉴定</h1>
+      </div>
+  <form role="form" enctype="multipart/form-data" action="/xinDian/" method="post">
+    <div class="form-group">
+        <label for="inputfile">CT数据文件导入</label>
+        <input type="file" id="inputFile" name="inputFile">
+    </div>
+    <input type="text" class="form-control" id="name" name="beiZhu" placeholder="备注" style="margin-bottom: 5px">
+    <button type="submit" class="btn btn-success">提交</button>
+    <button type="reset" class="btn btn btn-danger">取消</button>
+      {% csrf_token %}
+</form>
+
+        <div class="page-header">
+        <h1>眼底病变影像鉴定</h1>
+      </div>
+  <form role="form" enctype="multipart/form-data" action="/xinDian/" method="post">
+    <div class="form-group">
+        <label for="inputfile">眼底影像数据文件导入</label>
+        <input type="file" id="inputFile" name="inputFile">
+    </div>
+    <input type="text" class="form-control" id="name" name="beiZhu" placeholder="备注" style="margin-bottom: 5px">
+    <button type="submit" class="btn btn-success">提交</button>
+    <button type="reset" class="btn btn btn-danger">取消</button>
+      {% csrf_token %}
+</form>
+    </div>
+
+
+    </body>
+</html>

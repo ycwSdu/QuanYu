@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="utf-8">
+    <title>数据详情解析</title>
+    <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../dist/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <link href="theme.css" rel="stylesheet">
+    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">泉毓科技™医学影像智能分析系统</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse" style="float: right;">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="/">主页</a></li>
+            <li><a href="/about">关于</a></li>
+            <li><a href="/about">我的</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+
+
+
+
+    <div style="height: 60px; width: 100%"></div>
+<div class="container theme-showcase" role="main">
+
+     <div class="dropdown" >
+     <label>选择异常跳动查看详情：</label>
+	<button type="button" class="btn dropdown-toggle" id="dropdownMenu1"
+			data-toggle="dropdown">
+		点击选择
+		<span class="caret"></span>
+	</button>
+     <button class="btn btn-primary" onclick="showReport()">生成诊断报告</button>
+     <button class="btn btn-success">保存诊断报告</button>
+	<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+		{% for each in all_ill %}
+            <li role="presentation">
+			<a role="menuitem" tabindex="-1" href="#" onclick="make({{ each }})">{{ each.name }}</a>
+		    </li>
+    {% endfor %}
+	</ul>
+</div>
+    <div id="dataList" style="width: 100%;height:600px;"></div>
+<div id="report" class="chart-container" style="display: none; margin-left: 10%; margin-right: 10%">
+
+            <p class="title" style="font-size: 18px; font-weight:bold;" > AI诊断</p>
+            <p class="subtitle" style="font-size: 12px;" > 报告需医生确认</p>
+    <table class="table table-hover">
+        <tr><th>姓名</th>
+        <th>年龄</th>
+        <th>性别</th>
+        <th>身份证号</th>
+        <th>检查时间</th>
+        </tr>
+        <tr>
+            <td>{{ report.user.name }}</td>
+            <td>{{ report.user.age }}</td>
+            <td>{{ report.user.sex }}</td>
+            <td>{{ report.user.id }}</td>
+            <td>{{ report.user.time }}</td>
+        </tr>
+    </table>
+            <table class="table table-hover">
+                {{ report.data|safe}}
+</table>
+        </div>
+</div>
+    <script type="text/javascript">
+    function showReport() {
+        document.getElementById('report').style.display = 'block';
+    }
+    function make(data)
+    {
+        //alert(data.name);
+        option2 = {
+    title: {text: '当前已选择---'+data.name, subtext: '滑动鼠标可缩放'},
+    tooltip: {trigger: 'axis', axisPointer: {type: 'cross'}},
+    toolbox: {show: true, feature: {saveAsImage: {}}},
+    xAxis: {type: 'category', boundaryGap: false, data: [{% for i in x_r %}'{{ i }}',{% endfor %}],},
+    yAxis: {type: 'value', axisLabel: {formatter: '{value} W'}, axisPointer: {snap: true}},
+    dataZoom: [{type:'inside'}],
+    series: [
+        {name: '导联1', type: 'line', smooth: true, data: data.data1,
+            markArea: {data: [[{name: data.name, xAxis: '1200'}, {xAxis: '1500'}],]}},
+        {name: '导联2', type: 'line', smooth: true, color: 'black', data: data.data2,},
+            ]
+    };
+    var myChart2 = echarts.init(document.getElementById('dataList'));
+    myChart2.setOption(option2);
+    }
+    function showList() {
+        var myChart2 = echarts.init(document.getElementById('dataList'));
+        myChart2.setOption(option2);
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <title>关于我们</title>
+        <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../dist/css/bootstrap-theme.min.css" rel="stylesheet">
+        <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+        <link href="theme.css" rel="stylesheet">
+        <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+        <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/index">泉毓科技™医学影像智能分析系统</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse" style="float: right;">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="/">主页</a></li>
+            <li><a href="/about">关于</a></li>
+            <li><a href="/adminQuit">退出登录</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container theme-showcase" role="main">
+
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
+        <h1>泉毓™医学影像后台管理系统</h1>
+
+      </div>
+        <nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="#">功能选项</a>
+    </div>
+    <div>
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="#" onclick="addUser()">添加病例</a></li>
+            <li><a href="#" onclick="showUser()">显示所有病例</a></li>
+           
+        </ul>
+    </div>
+    </div>
+</nav>
+    <div id="addUser">
+        <form class="form-horizontal" role="form" method="post" action="/register/">
+  <div class="form-group">
+    <label for="firstname" class="col-sm-2 control-label">姓名</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="firstname" name="name" placeholder="请输入姓名" style="width: 50%">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="lastname" class="col-sm-2 control-label">身份证号</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="lastname" name="id" placeholder="请输入身份证号" style="width: 50%">
+    </div>
+  </div>
+            <div class="form-group">
+    <label for="lastname" class="col-sm-2 control-label">年龄</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="lastname" name="age" placeholder="请输入年龄" style="width: 50%">
+    </div>
+  </div>
+<div class="form-group">
+    <label for="lastname" class="col-sm-2 control-label">性别</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="lastname" name="sex" placeholder="请输入性别" style="width: 50%">
+    </div>
+  </div>
+            <div class="form-group">
+    <label for="lastname" class="col-sm-2 control-label">联系方式</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="lastname" name="tel" placeholder="请输入正确的手机号" style="width: 50%">
+    </div>
+  </div>
+            <div class="form-group">
+    <label for="lastname" class="col-sm-2 control-label">家庭住址</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="lastname" name="addr" placeholder="请输入准确的地址" style="width: 50%">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-default">添加病例</button>
+        <button type="reset" class="btn btn-default">取消添加</button>
+    </div>
+  </div>
+        {% csrf_token %}
+</form>
+    </div>
+        <div id="showAllUsers" style="display: none">
+            <table class="table table-striped">
+	<caption>以下为所有病例信息</caption>
+	<thead>
+		<tr>
+			<th>证件号</th>
+			<th>姓名</th>
+			<th>年龄</th>
+            <th>性别</th>
+            <th>电话</th>
+            <th>地址</th>
+            <th>操作</th>
+            <th>操作</th>
+		</tr>
+	</thead>
+	<tbody>
+    {% for each in users %}
+        <tr>
+			<td>{{ each.id }}</td>
+			<td>{{ each.name }}</td>
+			<td>{{ each.age }}</td>
+            <td>{{ each.sex }}</td>
+			<td>{{ each.tel }}</td>
+			<td>{{ each.addr }}</td>
+            <td>
+                <button class="btn-success"><a href="/showUserData?id={{ each.id }}" style="text-decoration: none; color: white">详情</a></button>
+            </td>
+            <td><button class="btn-danger"><a href="/delUserData?id={{ each.id }}" style="text-decoration: none; color: white">删除</a></button></td>
+		</tr>
+    {% endfor %}
+
+	</tbody>
+</table>
+        </div>
+    </div>
+    </body>
+    <script>
+        function showUser() {
+            document.getElementById('showAllUsers').style.display = 'block';
+            document.getElementById('addUser').style.display = 'none';
+        }
+        function addUser() {
+            document.getElementById('showAllUsers').style.display = 'none';
+            document.getElementById('addUser').style.display = 'block';
+        }
+    </script>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="utf-8">
+    <title>心电分析结果</title>
+    <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../dist/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <link href="theme.css" rel="stylesheet">
+    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">泉毓科技™医学影像智能分析系统</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse" style="float: right;">
+          <ul class="nav navbar-nav">
+              <li><a href="/details/">查看详情</a></li>
+            <li class="active"><a href="/">主页</a></li>
+            <li><a href="/about">关于</a></li>
+            <li><a href="/about">我的</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<div class="container theme-showcase" role="main">
+<div style="height: 60px; width: 100%"></div>
+    <h2>心拍数: {{ total }}</h2>
+
+    <div id="pie" style="width: 800px;height:600px;"></div>
+</div>
+    <script type="text/javascript">
+
+        var myChart = echarts.init(document.getElementById('pie'));
+        option = {
+    tooltip: {
+        trigger: 'item',
+        formatter: '{a} <br/>{b}: {c} ({d}%)'
+    },
+    legend: {
+        orient: 'vertical',
+        left: 10,
+        data: [{% for each in ill_names %}
+                '{{ each }}',
+        {% endfor %}
+        ]
+    },
+    series: [
+        {
+            name: '正常-异常心拍比例',
+            type: 'pie',
+            selectedMode: 'single',
+            radius: [0, '30%'],
+
+            label: {
+                position: 'inner'
+            },
+            labelLine: {
+                show: false
+            },
+            data: [
+                {value: {{zc_num }}, name: '正常跳动'},
+                {value: {{yc_num}}, name: '异常跳动'},
+            ]
+        },
+        {
+            name: '异常跳动类型',
+            type: 'pie',
+            radius: ['40%', '55%'],
+            label: {
+                formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ',
+                backgroundColor: '#eee',
+                borderColor: '#aaa',
+                borderWidth: 1,
+                borderRadius: 4,
+                // shadowBlur:3,
+                // shadowOffsetX: 2,
+                // shadowOffsetY: 2,
+                // shadowColor: '#999',
+                // padding: [0, 7],
+                rich: {
+                    a: {
+                        color: '#999',
+                        lineHeight: 22,
+                        align: 'center'
+                    },
+
+                    hr: {
+                        borderColor: '#aaa',
+                        width: '100%',
+                        borderWidth: 0.5,
+                        height: 0
+                    },
+                    b: {
+                        fontSize: 16,
+                        lineHeight: 33
+                    },
+                    per: {
+                        color: '#eee',
+                        backgroundColor: '#334455',
+                        padding: [2, 4],
+                        borderRadius: 2
+                    }
+                }
+            },
+            data: [
+                {% for key,value in ill_dict.items%}
+                    {value: {{ value }}, name: '{{key}}'},
+                {% endfor%}
+            ]
+        }
+    ]
+};
+            myChart.setOption(option);
+    </script>
+</body>
+</html>
